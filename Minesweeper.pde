@@ -31,7 +31,7 @@ public void setBombs()
   while(bombs.size() < NUM_BOMBS) {  
     int r = (int)(Math.random()*NUM_ROWS);
     int c = (int)(Math.random()*NUM_COLS);
-    if (bombs.contains(buttons) != true) {
+    if (!bombs.contains(buttons[r][c])) {
       bombs.add(buttons[r][c]);
       System.out.println(c + ", " + r);
     }
@@ -90,7 +90,17 @@ public class MSButton
   public void mousePressed () 
   {
     clicked = true;
-    //if ()
+    if (mouseButton == RIGHT) {
+      marked = true;
+      if (marked == false)
+        clicked  = false;
+    }
+    else if (bombs.contains(this))
+      displayLosingMessage();
+    else if (countBombs(r,c) > 0)
+      label = label + countBombs();
+    else
+      bombs[r][c].mousePressed();
   }
 
   public void draw () 
