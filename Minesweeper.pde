@@ -93,14 +93,30 @@ public class MSButton
     if (mouseButton == RIGHT) {
       marked = true;
       if (marked == false)
-        clicked  = false;
+        clicked = false;
     }
     else if (bombs.contains(this))
       displayLosingMessage();
     else if (countBombs(r,c) > 0)
-      label = label + countBombs();
-    else
-      bombs[r][c].mousePressed();
+      label = label + countBombs(r,c);
+    else {
+      if (isValid(r-1,c) == true && buttons[r-1][c].isClicked() == false) 
+        buttons[r-1][c].mousePressed();
+      if (isValid(r+1,c-1) == true && buttons[r+1][c-1].isClicked() == false)
+        buttons[r+1][c-1].mousePressed();
+      if (isValid(r-1,c+1) == true && buttons[r-1][c+1].isClicked() == false)
+        buttons[r-1][c+1].mousePressed();
+      if (isValid(r+1,c) == true && buttons[r+1][c].isClicked() == false)
+        buttons[r+1][c].mousePressed();
+      if (isValid(r,c-1) == true && buttons[r][c-1].isClicked() == false)
+        buttons[r][c-1].mousePressed();
+      if (isValid(r,c+1) == true && buttons[r][c+1].isClicked() == false)
+        buttons[r][c+1].mousePressed();
+      if (isValid(r+1,c+1) == true && buttons[r+1][c+1].isClicked() == false)
+        buttons[r+1][c+1].mousePressed();
+      if (isValid(r-1,c-1) == true && buttons[r-1][c-1].isClicked() == false)
+        buttons[r-1][c-1].mousePressed();
+    }
   }
 
   public void draw () 
