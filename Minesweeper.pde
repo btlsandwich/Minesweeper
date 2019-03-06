@@ -91,15 +91,16 @@ public class MSButton
   {
     clicked = true;
     if (mouseButton == RIGHT) {
-      if (marked != false)
-        marked = false;
-      else
-        marked = true;
+      marked = !marked;
     }
-    else if (bombs.contains(this))
+    else if (bombs.contains(this)) {
+      clicked = true;
       displayLosingMessage();
-    else if (countBombs(r,c) > 0)
-      label = label + countBombs(r,c);
+    }
+    else if (countBombs(r,c) > 0) {
+      label = "" + countBombs(r,c);
+      clicked = true;
+    }
     else {
       if (isValid(r-1,c) == true && buttons[r-1][c].isClicked() == false) 
         buttons[r-1][c].mousePressed();
@@ -141,8 +142,8 @@ public class MSButton
   }
   public boolean isValid(int r, int c)
   {
-    if (r < 5 && r >= 0) {
-      if (c < 5 && c >=0)
+    if (r < 3 && r >= 0) {
+      if (c < 3 && c >=0)
         return true;
     return false;
   }
@@ -153,7 +154,7 @@ public class MSButton
     int yoroshikuonegaishimasu = 0;
      for (int r = row-1; r <= row+1; r++) {
     for (int c = col-1; c <= col+1; c++) {
-      if (isValid(r,c) == true && isMarked() == true)
+      if (isValid(r,c) == true && bombs.contains(buttons[r][c]) == true)
         yoroshikuonegaishimasu++;
     }
   }
