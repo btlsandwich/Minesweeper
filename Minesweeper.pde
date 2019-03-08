@@ -1,6 +1,6 @@
 public final static int NUM_ROWS = 20;
 public final static int NUM_COLS = 20;
-public final static int NUM_BOMBS = 30;
+public final static int NUM_BOMBS = 1;
 int tileCount = 0;
 
 import de.bezier.guido.*;
@@ -57,13 +57,18 @@ public void draw ()
 }
 public boolean isWon()
 {
-  //your code here
+  for (int i = 0; i < NUM_ROWS; i++) {
+    for (int j = 0; j < NUM_COLS; j++) {
+      if (buttons[i][j].isClicked() == true || buttons[i][j].isMarked() == true)
+        return true;
+    }
+  }
   return false;
 }
 public void displayLosingMessage()
 {
-    for(int i=0;i<bombs.size();i++) {
-      if(bombs.get(i).isClicked()==false)
+    for(int i = 0; i < bombs.size(); i++) {
+      if (bombs.get(i).isClicked() == false)
         bombs.get(i).mousePressed();
     }
     buttons[NUM_ROWS/2][(NUM_COLS/2)-5].setLabel("G");
@@ -134,8 +139,6 @@ public class MSButton
         label = "" + countBombs(r,c);
         if (!clicked)
           tileCount++;
-        if (tileCount == 400-bombs.size())
-          displayWinningMessage();
         clicked = true;
       }
     else {
