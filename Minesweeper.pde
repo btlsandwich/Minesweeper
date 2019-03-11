@@ -46,24 +46,24 @@ public void draw ()
   stroke(180,140,20);
   strokeWeight(5);
   rect(0,401,400,99);
-  stroke(0);
+  stroke(255);
   strokeWeight(1);
+  text("MINESWEEPER",50,450);
+  text("NUMBER OF BOMBS REMAINING: ", 50, 475);
+  stroke(0);
   if (isWon())
     displayWinningMessage();
-  // for (int i = 0; i < NUM_ROWS; i++) {
-  //   for (int j = 0; j < NUM_COLS; j++) {
-  //     buttons[i][j].draw();
-  // }
 }
 public boolean isWon()
 {
   for (int i = 0; i < NUM_ROWS; i++) {
     for (int j = 0; j < NUM_COLS; j++) {
-      if (buttons[i][j].isClicked() == true || buttons[i][j].isMarked() == true)
-        return true;
+      if (!buttons[i][j].isClicked() || !buttons[i][j].isMarked())
+        return false;
+      return true;
     }
   }
-  return false;
+  return true;
 }
 public void displayLosingMessage()
 {
@@ -137,9 +137,8 @@ public class MSButton
       }
       else if (countBombs(r,c) > 0) {
         label = "" + countBombs(r,c);
-        if (!clicked)
-          tileCount++;
-        clicked = true;
+        if (clicked)
+          tileCount--;
       }
     else {
       if (isValid(r-1,c) == true && buttons[r-1][c].isClicked() == false) 
@@ -193,7 +192,7 @@ public class MSButton
   {
     int sum = 0;
      if (isValid(row-1,col) == true && bombs.contains(buttons[row-1][col]))
-        sum++;
+        sum++; 
       if (isValid(row+1,col) == true && bombs.contains(buttons[row+1][col]))
         sum++;
       if (isValid(row,col-1) == true && bombs.contains(buttons[row][col-1]))
