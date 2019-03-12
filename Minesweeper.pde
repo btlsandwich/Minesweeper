@@ -1,7 +1,7 @@
 public final static int NUM_ROWS = 20;
 public final static int NUM_COLS = 20;
-public final static int NUM_BOMBS = 1;
-int tileCount = 0;
+public final static int NUM_BOMBS = 30;
+public int tileCount = (NUM_ROWS)*(NUM_COLS);
 
 import de.bezier.guido.*;
 //Declare and initialize NUM_ROWS and NUM_COLS = 20
@@ -47,21 +47,20 @@ public void draw ()
   rect(0,401,400,99);
   stroke(255);
   strokeWeight(1);
-  text("MINESWEEPER",50,450);
-  text("NUMBER OF BOMBS REMAINING: ", 50, 475);
+  fill(255);
+  textSize(35);
+  text("MINESWEEPER",200,425);
+  textSize(15);
+  text("NUMBER OF BOMBS REMAINING: " , 200, 455);
+  textSize(10);
   stroke(0);
   if (isWon())
     displayWinningMessage();
 }
 public boolean isWon()
 {
-  for (int i = 0; i < NUM_ROWS; i++) {
-    for (int j = 0; j < NUM_COLS; j++) {
-      if (!buttons[i][j].isClicked() || !buttons[i][j].isMarked())
-        return false;
-      return true;
-    }
-  }
+  if (tileCount != 0)
+    return false;
   return true;
 }
 public void displayLosingMessage()
@@ -126,18 +125,22 @@ public class MSButton
 
   public void mousePressed () 
   {
-      clicked = true;
+      if (mouseButton == LEFT) {
+        clicked = true;
+        if (clicked)
+          tileCount--;
+      }
       if (mouseButton == RIGHT) {
         marked = !marked;
+        clicked = !clicked;
+        if (marked)
+          tileCount--;
       }
       else if (bombs.contains(this)) {
-        clicked = true;
         displayLosingMessage();
       }
       else if (countBombs(r,c) > 0) {
         label = "" + countBombs(r,c);
-        if (clicked)
-          tileCount--;
       }
     else {
       if (isValid(r-1,c) == true && buttons[r-1][c].isClicked() == false) 
@@ -189,7 +192,7 @@ public class MSButton
   }
   public int countBombs(int row, int col)
   {
-    int sum = 0;
+    int sum = 0; 
      if (isValid(row-1,col) == true && bombs.contains(buttons[row-1][col]))
         sum++; 
       if (isValid(row+1,col) == true && bombs.contains(buttons[row+1][col]))
@@ -208,4 +211,33 @@ public class MSButton
         sum++;
     return sum;
   }
+}
+
+public void konamiCode() {
+  if (key == CODED) {
+  if (keyCode == UP) {
+    if (keyCode == UP) {
+      if (keyCode == DOWN) {
+        if (keyCode == DOWN) {
+          if (keyCode == LEFT) {
+            if (keyCode == RIGHT) {
+              if (keyCode == LEFT) {
+                if (keyCode == RIGHT) {
+                  if (key == 'b') {
+                    if (key == 'a') {
+                          for(int i = 0; i < bombs.size(); i++) {
+                            if (bombs.get(i).isClicked() == false)
+                              bombs.get(i).mousePressed(); }
+                          displayWinningMessage();
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 }
