@@ -2,6 +2,7 @@ public final static int NUM_ROWS = 20;
 public final static int NUM_COLS = 20;
 public final static int NUM_BOMBS = 30;
 public int tileCount = (NUM_ROWS)*(NUM_COLS);
+public int bombsCount = NUM_BOMBS;
 
 import de.bezier.guido.*;
 //Declare and initialize NUM_ROWS and NUM_COLS = 20
@@ -51,7 +52,7 @@ public void draw ()
   textSize(35);
   text("MINESWEEPER",200,425);
   textSize(15);
-  text("NUMBER OF BOMBS REMAINING: " , 200, 455);
+  text("NUMBER OF BOMBS REMAINING: " + bombsCount, 200, 460);
   textSize(10);
   stroke(0);
   if (isWon())
@@ -135,6 +136,8 @@ public class MSButton
         clicked = !clicked;
         if (marked)
           tileCount--;
+        if (marked && bombs.contains(this))
+          bombsCount--;
       }
       else if (bombs.contains(this)) {
         displayLosingMessage();
@@ -164,8 +167,9 @@ public class MSButton
 
   public void draw () 
   {    
-    if (marked)
+    if (marked) {
       fill(0);
+    }
     else if ( clicked && bombs.contains(this) ) 
       fill(255, 0, 0);
     else if (clicked)
@@ -193,42 +197,51 @@ public class MSButton
   public int countBombs(int row, int col)
   {
     int sum = 0; 
-     if (isValid(row-1,col) == true && bombs.contains(buttons[row-1][col]))
+     if (isValid(row-1,col) == true && bombs.contains(buttons[row-1][col])) {
         sum++; 
-      if (isValid(row+1,col) == true && bombs.contains(buttons[row+1][col]))
+     }
+      if (isValid(row+1,col) == true && bombs.contains(buttons[row+1][col])) {
         sum++;
-      if (isValid(row,col-1) == true && bombs.contains(buttons[row][col-1]))
+      }
+      if (isValid(row,col-1) == true && bombs.contains(buttons[row][col-1])) {
         sum++;
-      if (isValid(row,col+1) == true && bombs.contains(buttons[row][col+1]))
+      }
+      if (isValid(row,col+1) == true && bombs.contains(buttons[row][col+1])) {
         sum++;
-      if (isValid(row-1,col+1) == true && bombs.contains(buttons[row-1][col+1]))
+      }
+      if (isValid(row-1,col+1) == true && bombs.contains(buttons[row-1][col+1])) {
         sum++;
-      if (isValid(row-1,col-1) == true && bombs.contains(buttons[row-1][col-1]))
+      }
+      if (isValid(row-1,col-1) == true && bombs.contains(buttons[row-1][col-1])) {
         sum++;
-      if (isValid(row+1,col+1) == true && bombs.contains(buttons[row+1][col+1]))
+      }
+      if (isValid(row+1,col+1) == true && bombs.contains(buttons[row+1][col+1])) {
         sum++;
-      if (isValid(row+1,col-1) == true && bombs.contains(buttons[row+1][col-1]))
+      }
+      if (isValid(row+1,col-1) == true && bombs.contains(buttons[row+1][col-1])) {
         sum++;
+      }
     return sum;
   }
 }
 
 public void konamiCode() {
   if (key == CODED) {
-  if (keyCode == UP) {
     if (keyCode == UP) {
-      if (keyCode == DOWN) {
+      if (keyCode == UP) {
         if (keyCode == DOWN) {
-          if (keyCode == LEFT) {
-            if (keyCode == RIGHT) {
-              if (keyCode == LEFT) {
-                if (keyCode == RIGHT) {
-                  if (key == 'b') {
-                    if (key == 'a') {
-                          for(int i = 0; i < bombs.size(); i++) {
-                            if (bombs.get(i).isClicked() == false)
-                              bombs.get(i).mousePressed(); }
-                          displayWinningMessage();
+          if (keyCode == DOWN) {
+            if (keyCode == LEFT) {
+              if (keyCode == RIGHT) {
+                if (keyCode == LEFT) {
+                  if (keyCode == RIGHT) {
+                    if (key == 'b') {
+                      if (key == 'a') {
+                        for(int i = 0; i < bombs.size(); i++) {
+                          if (bombs.get(i).isClicked() == false)
+                            bombs.get(i).mousePressed(); }
+                        displayWinningMessage();
+                      }
                     }
                   }
                 }
@@ -239,5 +252,4 @@ public void konamiCode() {
       }
     }
   }
-}
 }
