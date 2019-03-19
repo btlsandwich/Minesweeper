@@ -3,6 +3,7 @@ public final static int NUM_COLS = 20;
 public final static int NUM_BOMBS = 30;
 public int tileCount = (NUM_ROWS)*(NUM_COLS);
 public int bombsCount = NUM_BOMBS;
+//boolean [konami] = new boolean [8];
 
 import de.bezier.guido.*;
 //Declare and initialize NUM_ROWS and NUM_COLS = 20
@@ -57,6 +58,7 @@ public void draw ()
   stroke(0);
   if (isWon())
     displayWinningMessage();
+  //konamiCode();
 }
 public boolean isWon()
 {
@@ -225,7 +227,41 @@ public class MSButton
   }
 }
 
-public void konamiCode() {
+// public void keyPressed() {
+//   if (keyCode == UP)
+//     konami[0] == true;
+// }
+
+public void konamiCode(int[] a) {
+  //https://stackoverflow.com/questions/37403055/double-click-function-for-key-listener-using-arrays-and-array-lists-in-java-coun
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   if (key == CODED) {
     if (keyCode == UP) {
       if (keyCode == UP) {
